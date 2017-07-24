@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Age Info</title>
+
+    <!-- Style sheets -->
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/toastr.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+</head>
+
+<body ng-app="ageRangeInfoManagement">
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <a class="navbar-brand"
+               ui-sref="personList">Age Ranger</a>
+            <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle"
+                        data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a ui-sref="personList">Person List</a></li>
+                    <li>
+                        <a ui-sref="personAddOrEdit.info({id: 0})">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            Add Person
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div ui-view></div>
+    </div>
+
+    <!-- Library Scripts -->
+
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="Scripts/angular-resource.js"></script>
+    <script src="Scripts/angular-ui-router.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+
+    <!-- Application Script -->
+    <script src="app/app.js"></script>
+
+    <!-- Services -->
+    <script src="common/common.services.js"></script>
+    <script src="common/personResource.js"></script>
+    <script src="common/dataAccessService.js"></script>
+    <script src="common/dataSearchService.js"></script>
+    <!-- Person Controllers -->
+    <script src="app/persons/personListCtrl.js"></script>
+    <script src="app/persons/personAddOrEditCtrl.js"></script>
+</body>
+
+</html>

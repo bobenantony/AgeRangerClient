@@ -1,0 +1,63 @@
+<form class="form-horizontal" name="personForm" novalidate>
+    <fieldset>
+        <div class="form-group"
+             ng-class="{'has-error':personForm.inputFirstName.$invalid &&
+                                    personForm.inputFirstName.$dirty}">
+            <label class="col-md-2 control-label"
+                   for="inputFirstName">First Name</label>
+            <div class="col-md-4">
+                <input class="form-control"
+                       id="inputFirstName"
+                       name="inputFirstName"
+                       type="text"
+                       placeholder="First Name (Required)"
+                       ng-model="vm.person.firstName" required />
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':personForm.inputLastName.$invalid &&
+                                    personForm.inputLastName.$dirty}">
+            <label class="col-md-2 control-label"
+                   for="inputLastName">Last Name</label>
+            <div class="col-md-4">
+                <input class="form-control"
+                       id="inputLastName"
+                       name="inputLastName"
+                       type="text"
+                       placeholder="Last Name (Required)"
+                       ng-model="vm.person.lastName" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label"
+                   for="inputAge">Age</label>
+            <div class="col-md-4">
+                <input class="form-control"
+                       id="inputAge"
+                       type="number"
+                       placeholder="Age"
+                       ng-model="vm.person.age" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4 col-md-offset-2">
+                <span>
+                    <button class="btn btn-primary"
+                            style="width:80px;margin-right:10px"
+                            ng-click="vm.saveClick(personForm)">
+                        Save
+                    </button>
+                </span>
+                <span>
+                    <button class="btn btn-default"
+                            style="width:70px"
+                            ng-click="vm.cancel()">
+                        Cancel
+                    </button>
+                </span>
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+

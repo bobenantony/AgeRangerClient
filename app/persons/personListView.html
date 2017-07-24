@@ -1,0 +1,79 @@
+<div ng-controller="PersonListCtrl as vm">
+    <!-- ** BEGIN SEARCH AREA ** -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="panel-title">Search for Persons</h1>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="searchFirstName">First Name</label>
+                <input type="text" class="form-control"
+                       ng-model="vm.searchInput.firstName" />
+            </div>
+            <div class="form-group">
+                <label for="searchLastName">Last Name</label>
+                <input type="text" class="form-control"
+                       ng-model="vm.searchInput.lastName" />
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button"
+                    class="btn btn-sm btn-primary"
+                    ng-click="vm.search()">
+                <i class="glyphicon glyphicon-search"></i>
+                &nbsp;Search
+            </button>
+            <button type="button"
+                    class="btn btn-sm btn-primary"
+                    ng-click="vm.resetSearch()">
+                <i class="glyphicon glyphicon-share-alt"></i>
+                &nbsp;Reset
+            </button>
+        </div>
+    </div>
+    <!-- ** END SEARCH AREA ** -->
+    <!-- ** BEGIN LIST AREA ** -->
+    <div class="table-responsive">
+        <table id="personTable"
+               class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="pdsa-action-button-column">
+                        Edit
+                    </th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Age Group</th>
+                    <th class="pdsa-action-button-column">
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="person in vm.persons | filter: vm.searchImmediate">
+                    <td class="pdsa-action-button-column">
+                        <a class="btn btn-default btn-sm"
+                           ui-sref="personAddOrEdit.info({id: person.id})">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                    </td>
+                    <td>{{person.firstName}}</td>
+                    <td>{{person.lastName}}</td>
+                    <td>{{person.age}}</td>
+                    <td>{{person.ageGroup}}</td>
+                    <td class="pdsa-action-button-column">
+                        <a href="#"
+                           ng-click="vm.deleteClick(person.id)"
+                           class="btn btn-default btn-sm">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- ** END LIST AREA ** -->
+</div>
