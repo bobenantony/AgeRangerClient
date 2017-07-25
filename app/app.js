@@ -3,6 +3,7 @@
 
     var app = angular.module("ageRangeInfoManagement", ["common.services","ui.router"]);
 
+    //Routing Configuration
     app.config(["$stateProvider",
         "$urlRouterProvider",
         function ($stateProvider, $urlRouterProvider) {

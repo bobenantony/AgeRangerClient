@@ -1,5 +1,5 @@
 /**
- * Created by Deb on 8/26/2014.
+ * Created by Boben.
  */
 (function () {
     "use strict";
@@ -22,27 +22,19 @@
         vm.person = person;
 
         if (vm.person && vm.person.id) {
-            vm.title = "Edit: " + vm.person.firstName;
+            vm.title = "Edit : " + vm.person.firstName;
         }
         else {
             vm.title = "New Person"
         }
 
-        //vm.submit = function (isValid) {
-        //    if (isValid) {
-        //        vm.person.$save(function (data) {
-        //            toastr.success("Save Successful");
-        //        });
-        //    } else {
-        //        alert("Please correct the validation errors first.");
-        //    }
-            
-        //}
-
+        //On clicking the cancel button on 'AddOrEditView' , it redirects the Url to 'PersonListView'
         vm.cancel = function () {
             $state.go('personList');
         }
 
+        //On clicking the save button on 'AddOrEditView' , it performs 'Insert or Update' depending on the 
+        //presence of title and redirects the Url to 'PersonListView'
         vm.saveClick = function (persomForm) {
             if (persomForm.$valid) {
                 if (vm.title === "New Person") {
@@ -51,7 +43,6 @@
                 else {
                     dService.updateData(person);
                 }
-                toastr.success("Save Successful");
             }
             else {
                 alert("Please correct the validation errors first.");

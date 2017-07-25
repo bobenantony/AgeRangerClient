@@ -27,15 +27,14 @@
                     promise = $http.delete(appSettings.serverPath + "/api/persons/" + id).then(function (response) {
                         // The then function here is an opportunity to modify the response
                         console.log(response);
-                        // The return value gets picked up by the then in the controller.
                         promise = null;
+                        // The return value gets picked up by the then in the controller.
                         return id;
                     });
                 }
                 // Return the promise to the controller
                 return promise;
             }
-
         };
 
         return myService;
