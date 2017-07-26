@@ -27,13 +27,15 @@
                        ng-model="vm.person.lastName" required />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error':personForm.inputAge.$invalid &&
+                                    personForm.inputAge.$dirty}">
             <label class="col-md-2 control-label"
                    for="inputAge">Age</label>
             <div class="col-md-4">
                 <input class="form-control"
                        id="inputAge"
                        type="number"
+                       min="0"
                        placeholder="Age"
                        ng-model="vm.person.age" />
             </div>
