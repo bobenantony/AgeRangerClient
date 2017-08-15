@@ -2,21 +2,30 @@
     "use strict";
     angular
         .module("ageRangeInfoManagement")
-        .controller("PersonListCtrl", ['personResource', 'dataSearchService', PersonListCtrl]);
+        .controller("PersonListCtrl", ['dataFactory', PersonListCtrl]);
 
-    function PersonListCtrl(personResource, dataSearchService) {
+    function PersonListCtrl(dataFactory, dataSearchService) {
         var vm = this;
-        
-        //Object definition for datbinding for the search functionality
+        vm.status;
+        vm.persons;
+
+        //Object definition for databinding for the search functionality
         vm.searchInput = {
             firstName: '',
             lastName: ''
         };
-        
+
+        vm.getPersons = function (searchInput,MODE) {
+            dataFactory.getPersons(searchInput,MODE)
+                .then(function (response) {
+                    vm.persons = response.data;
+                }, function (error) {
+                    vm.status = 'Unable to load person data: ' + error.message;
+                });
+        }
+
         //Retrives the person information from the database - Call the GET Api
-        personResource.query({ search: vm.searchInput },function (data) {
-            vm.persons = data;
-        });
+        vm.getPersons(vm.searchInput, 'READ');
 
         //Filter for the Client side search - Dynamic reflection on the table while the user enters data 
         // on input text boxes for 'first name' & 'last name'
@@ -31,9 +40,7 @@
         // Calls the Server side search functionality - a required feature in multi user environment
         vm.search = function () {
             var searchEntity = vm.searchInput;
-            dataSearchService.getPersons(searchEntity).then(function (d) {
-                vm.persons = d;
-            });
+            vm.getPersons(searchEntity ,'SERVER_SEARCH');
         }
 
         // Resets the search input boxes and the table
@@ -43,15 +50,14 @@
                 lastName: ''
             };
 
-            personResource.query(function (data) {
-                vm.persons = data;
-            });
+            //Refreshes the list with latest records in the table
+            vm.getPersons(vm.searchInput, 'READ');
         }
 
         // Deletes the person with the corresponding ID
         vm.deleteClick = function (id) {
             if (confirm("Delete this Person's information ?")) {
-                dataSearchService.deletePerson(id).then(function (d) {
+                dataFactory.deletePerson(id).then(function (d) {
                     // Get index of this person
                     var index = vm.persons.map(function (p)
                     { return p.id; }).indexOf(id);

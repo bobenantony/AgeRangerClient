@@ -9,15 +9,13 @@
         .controller("PersonAddOrEditCtrl",
         ["person",
             "$state",
-            "dataService",
+            "dataFactory",
             PersonAddOrEditCtrl]);
 
 
-    function PersonAddOrEditCtrl(person, $state, dataService) {
+    function PersonAddOrEditCtrl(person, $state, dataFactory) {
         var vm = this;
-        var dService = dataService;
-
-        var serverPath = "http://localhost:61459";
+        vm.status;
 
         vm.person = person;
 
@@ -38,10 +36,28 @@
         vm.saveClick = function (persomForm) {
             if (persomForm.$valid) {
                 if (vm.title === "New Person") {
-                    dService.insertData(person);
+                    dataFactory.insertPerson(person)
+                    .then(function (response) {
+                        vm.status = 'Inserted Person! Refreshing list.';
+                        // Display Success message
+                        alert(vm.status);
+                        $state.go('personList');
+                    }, function (error) {
+                        vm.status = 'Unable to insert person: ' + error.message;
+                        alert(vm.status);
+                    });
                 }
                 else {
-                    dService.updateData(person);
+                    dataFactory.updatePerson(person)
+                    .then(function (response) {
+                        vm.status = 'Updated Person! Refreshing list.';
+                        // Display Success message
+                        alert(vm.status);;
+                        $state.go('personList');
+                    }, function (error) {
+                        vm.status = 'Unable to update person: ' + error.message;
+                        alert(vm.status);
+                    });
                 }
             }
             else {
