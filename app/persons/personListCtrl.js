@@ -22,6 +22,7 @@
                     vm.persons = response.data;
                 }, function (error) {
                     vm.status = 'Unable to load person data: ' + error.message;
+                    alert(vm.status);
                 });
         }
 
@@ -64,6 +65,9 @@
                     { return p.id; }).indexOf(id);
                     // Remove person from array
                     vm.persons.splice(index, 1)
+                }, function (error) {
+                    vm.status = 'Unable to delete the record: ' + error.message;
+                    alert(vm.status);
                 });
             }
         }
