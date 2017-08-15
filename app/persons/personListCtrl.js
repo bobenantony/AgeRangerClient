@@ -2,9 +2,9 @@
     "use strict";
     angular
         .module("ageRangeInfoManagement")
-        .controller("PersonListCtrl", ['dataFactory', PersonListCtrl]);
+        .controller("PersonListCtrl", ['dataService', PersonListCtrl]);
 
-    function PersonListCtrl(dataFactory, dataSearchService) {
+    function PersonListCtrl(dataService, dataSearchService) {
         var vm = this;
         vm.status;
         vm.persons;
@@ -15,8 +15,9 @@
             lastName: ''
         };
 
+        //Retrives the person information from the database - Call the GET Api
         vm.getPersons = function (searchInput,MODE) {
-            dataFactory.getPersons(searchInput,MODE)
+            dataService.getPersons(searchInput,MODE)
                 .then(function (response) {
                     vm.persons = response.data;
                 }, function (error) {
@@ -24,7 +25,7 @@
                 });
         }
 
-        //Retrives the person information from the database - Call the GET Api
+        //Retrives the person information from the database
         vm.getPersons(vm.searchInput, 'READ');
 
         //Filter for the Client side search - Dynamic reflection on the table while the user enters data 
@@ -57,7 +58,7 @@
         // Deletes the person with the corresponding ID
         vm.deleteClick = function (id) {
             if (confirm("Delete this Person's information ?")) {
-                dataFactory.deletePerson(id).then(function (d) {
+                dataService.deletePerson(id).then(function (d) {
                     // Get index of this person
                     var index = vm.persons.map(function (p)
                     { return p.id; }).indexOf(id);

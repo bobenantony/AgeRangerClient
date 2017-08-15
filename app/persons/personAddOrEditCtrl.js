@@ -9,11 +9,11 @@
         .controller("PersonAddOrEditCtrl",
         ["person",
             "$state",
-            "dataFactory",
+            "dataService",
             PersonAddOrEditCtrl]);
 
 
-    function PersonAddOrEditCtrl(person, $state, dataFactory) {
+    function PersonAddOrEditCtrl(person, $state, dataService) {
         var vm = this;
         vm.status;
 
@@ -36,7 +36,7 @@
         vm.saveClick = function (persomForm) {
             if (persomForm.$valid) {
                 if (vm.title === "New Person") {
-                    dataFactory.insertPerson(person)
+                    dataService.insertPerson(person)
                     .then(function (response) {
                         vm.status = 'Inserted Person! Refreshing list.';
                         // Display Success message
@@ -48,7 +48,7 @@
                     });
                 }
                 else {
-                    dataFactory.updatePerson(person)
+                    dataService.updatePerson(person)
                     .then(function (response) {
                         vm.status = 'Updated Person! Refreshing list.';
                         // Display Success message
