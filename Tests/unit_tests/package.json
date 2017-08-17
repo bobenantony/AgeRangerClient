@@ -1,0 +1,14 @@
+{
+  "name": "age-ranger-app",
+  "version": "1.0.0",
+  "description": "Age Ranger App",
+  "main": "index.js",
+  "keywords": [
+    "persons"
+  ],
+  "author": "boben",
+  "license": "standard",
+  "devDependencies": {
+    "jasmine-core": "^2.3.4"
+  }
+}
