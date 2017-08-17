@@ -15,7 +15,12 @@ describe('dataAcess service', function() {
     beforeEach(inject(function (_dataService_, _$httpBackend_) {
         dataService = _dataService_;
 		$httpBackend = _$httpBackend_;
-	}));
+    }));
+
+    afterEach(function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    })
 
     //test checking whether the dataService.getPersons() returns all the persons data
 	it('should return all persons data', function() {
@@ -66,9 +71,11 @@ describe('dataAcess service', function() {
         var response;
         var id = 4;
 
+        //Mocking the backend Http Get request and responds with OK response
         $httpBackend.expect('GET', 'http://localhost:53738/api/persons/'+ id)
             .respond(200, personDataById);
 
+        //calls the function in the data service but gets the data only after '$httpBackend.flush()'
         dataService.getPerson(id)
             .then(function (data) {
                 response = data;
@@ -76,7 +83,25 @@ describe('dataAcess service', function() {
 
         $httpBackend.flush();
 
+        //Assert
         expect(response.data).toEqual(personDataById);
+    });
+
+    it('should create a person', function () {
+        var expectedData = { "id": 44, "firstName": "Banyan Gomo", "lastName": "Gum Tree", "age": 69567 }
+
+        //Mocking the backend Http Get request and responds with OK response
+        $httpBackend.expectPOST('http://localhost:53738/api/persons', expectedData)
+            .respond(201);
+
+        //calls the function in the data service but gets the data only after '$httpBackend.flush()'
+        dataService.insertPerson(expectedData)
+            .then(function (data) {
+                response = data;
+            });
+
+        //Assert
+        expect($httpBackend.flush).not.toThrow();
     });
 
 });
