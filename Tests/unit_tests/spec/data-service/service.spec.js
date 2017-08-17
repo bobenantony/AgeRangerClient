@@ -1,6 +1,7 @@
 describe('dataAcess service', function() {
     var personData = [{ "id": 2, "firstName": "Allan", "lastName": "Border", "age": 56, "ageGroup": "Kinda old" }, { "id": 4, "firstName": "Banyan", "lastName": "Tree", "age": 69873, "ageGroup": "Kauri tree" }, { "id": 1, "firstName": "Boben", "lastName": "Antony", "age": 37, "ageGroup": "Very adult" }, { "id": 8, "firstName": "Christiano", "lastName": "Ronaldo", "age": 1999, "ageGroup": "Vampire" }, { "id": 6, "firstName": "Erick", "lastName": "Pittman Costa Rica", "age": 780, "ageGroup": "Vampire" }, { "id": 3, "firstName": "James", "lastName": "Bond", "age": 700, "ageGroup": "Vampire" }, { "id": 9, "firstName": "Messi", "lastName": "Goldcost", "age": 9990, "ageGroup": "Kauri tree" }];
-	var dataService = {};
+    var personDataById = { "id": 4, "firstName": "Banyan", "lastName": "Tree", "age": 69873, "ageGroup": "Kauri tree" }
+    var dataService = {};
     var $httpBackend;
     searchEntity = {
         firstName: '',
@@ -59,6 +60,23 @@ describe('dataAcess service', function() {
         $httpBackend.flush();
 
         expect(response).toEqual('Error!');
+    });
+
+    it('should return person data by id', function () {
+        var response;
+        var id = 4;
+
+        $httpBackend.expect('GET', 'http://localhost:53738/api/persons/'+ id)
+            .respond(200, personDataById);
+
+        dataService.getPerson(id)
+            .then(function (data) {
+                response = data;
+            });
+
+        $httpBackend.flush();
+
+        expect(response.data).toEqual(personDataById);
     });
 
 });
