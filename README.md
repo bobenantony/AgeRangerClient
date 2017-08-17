@@ -10,3 +10,5 @@ Controller - Handles the user interactions by calling business logic defined in 
 
 Model - JSON data.
 
+Unit tests are added for the 'dataService' using Jasmine BDD framework
+
